@@ -1,0 +1,35 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.4'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'utb.fai'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+    // Jádro pro REST API (obsahuje webový server Tomcat a podporu pro JSON)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Práce s databází přes anotace @Entity a repozitáře (Hibernate)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // MySQL konektor pro runtime (používá se pouze při běhu aplikace)
+    // Změňte podle potřeby na jiný databázový konektor (napr: runtimeOnly 'com.h2database:h2' bez nutnosti externího DB serveru)
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // Standardní nástroje pro testování
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
