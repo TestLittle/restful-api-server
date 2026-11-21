@@ -75,10 +75,6 @@ public class MyUsers {
         return MyUserDTO.from(deletedUser);
     }
 
-    private MyUser ensureCreation(Long id){
-        return this.userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User wasn't created"));
-    }
-
     @PostMapping
     public MyUserDTO createUser(@RequestBody MyUserDTO newUser){
         MyUser user = new MyUser();
@@ -89,7 +85,7 @@ public class MyUsers {
         if(!isDataValid){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User couldn't be created, check the sent parameters");
         }
-        return MyUserDTO.from(this.userRepository.save(ensureCreation(user.getId())));
+        return MyUserDTO.from(this.userRepository.save(user));
     }
 
     @PutMapping("/{id}")
