@@ -33,7 +33,7 @@ public class MyUser {
             System.out.println("Email has incorrect format");
             return false;
         }
-        if(!phoneNumber.matches("\+420[0-9]{9}")){
+        if(!phoneNumber.matches("[+]420[0-9]{9}")){
             System.out.println("Phone number has an incorrect incorrect");
             return false;
         }
