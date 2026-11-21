@@ -29,8 +29,7 @@ public class MyUser {
     }
 
     public boolean isUserDataValid() {
-        if(!email.matches("^[a-zA-Z0-9_.+&*-]+(?:\\.[a-zA-Z0-9_.+&*-]+)*@" +
-                            "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")){
+        if(!email.matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$")){
             System.out.println("Email has incorrect format");
             return false;
         }
