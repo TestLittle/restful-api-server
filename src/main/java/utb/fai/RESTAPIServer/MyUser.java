@@ -29,6 +29,10 @@ public class MyUser {
     }
 
     public boolean isUserDataValid() {
+        if(name.isEmpty()){
+            System.out.println("Name mustn't be empty");
+            return false;
+        }
         if(!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")){
             System.out.println("Email has incorrect format");
             return false;
