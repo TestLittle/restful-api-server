@@ -25,11 +25,16 @@ public class MyUsers {
     UserRepository userRepository;
 
     @GetMapping
-    public List<MyUser> getUsers(){
+    public List<MyUserDTO> getUsers(){
         if(userRepository.findAll().isEmpty()){
             return List.of();
         }
-        return userRepository.findAll();
+        List<MyUser> users = userRepository.findAll();
+        List<MyUserDTO> usersDTO = new ArrayList<MyUserDTO>();
+        for(MyUser user: users){
+            usersDTO.add(MyUserDTO.from(user));
+        }
+        return usersDTO;
     }
     
     @GetMapping("/search")
@@ -63,7 +68,7 @@ public class MyUsers {
     }
 
     @DeleteMapping
-    public List<MyUser> deleteAllUsers(){
+    public List<MyUserDTO> deleteAllUsers(){
         this.userRepository.deleteAll();
         return getUsers();
     }
