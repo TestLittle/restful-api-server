@@ -24,7 +24,7 @@ dependencies {
 
     // MySQL konektor pro runtime (používá se pouze při běhu aplikace)
     // Změňte podle potřeby na jiný databázový konektor (napr: runtimeOnly 'com.h2database:h2' bez nutnosti externího DB serveru)
-	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 
     // Standardní nástroje pro testování
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
