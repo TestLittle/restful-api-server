@@ -85,7 +85,7 @@ public class MyUsers {
         if(!isDataValid){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User couldn't be created, check the sent parameters");
         }
-        return MyUserDTO.from(this.userRepository.save(user);
+        return MyUserDTO.from(this.userRepository.save(user));
     }
 
     @PutMapping("/{id}")
