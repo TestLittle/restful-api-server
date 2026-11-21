@@ -25,16 +25,11 @@ public class MyUsers {
     UserRepository userRepository;
 
     @GetMapping
-    public List<MyUserDTO> getUsers(){
+    public List<MyUser> getUsers(){
         if(userRepository.findAll().isEmpty()){
             return List.of();
         }
-        List<MyUser> users = userRepository.findAll();
-        List<MyUserDTO> usersDTO = new ArrayList<MyUserDTO>();
-        for(MyUser user: users){
-            usersDTO.add(MyUserDTO.from(user));
-        }
-        return usersDTO;
+        return userRepository.findAll();
     }
     
     @GetMapping("/search")
@@ -68,7 +63,7 @@ public class MyUsers {
     }
 
     @DeleteMapping
-    public List<MyUserDTO> deleteAllUsers(){
+    public List<MyUser> deleteAllUsers(){
         this.userRepository.deleteAll();
         return getUsers();
     }
@@ -90,7 +85,7 @@ public class MyUsers {
         if(!isDataValid){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User couldn't be created, check the sent parameters");
         }
-        return MyUserDTO.from(this.userRepository.save(user));
+        return MyUserDTO.from(this.userRepository.save(user);
     }
 
     @PutMapping("/{id}")
