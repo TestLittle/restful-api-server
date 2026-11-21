@@ -1,11 +1,23 @@
 package utb.fai.RESTAPIServer;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "Users")
 // Database entity representing a user in the system
 public class MyUser {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String phoneNumber;
 
     public MyUser() {}
@@ -17,11 +29,43 @@ public class MyUser {
     }
 
     public boolean isUserDataValid() {
-        // Add your validation logic here (e.g., email and phone number format
-        // validation)
+        if(!email.matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$")){
+            System.out.println("Email has incorrect format");
+            return false;
+        }
+        if(!phoneNumber.matches("+420[0-9]{9}")){
+            System.out.println("Phone number has an incorrect incorrect");
+            return false;
+        }
         return true;
     }
 
-    // TODO: Getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
     
 }
