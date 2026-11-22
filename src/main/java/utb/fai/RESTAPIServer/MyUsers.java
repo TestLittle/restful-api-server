@@ -27,6 +27,10 @@ public class MyUsers {
 
     @GetMapping
     public List<MyUserDTO> getUsers(){
+        return getUsersAndReturnDTO();
+    }
+
+    private List<MyUserDTO> getUsersAndReturnDTO(){
         if(userRepository.findAll().isEmpty()){
             return List.of();
         }
@@ -41,8 +45,11 @@ public class MyUsers {
     @GetMapping("/search")
     @ResponseBody
     public List<MyUserDTO> getUsersByQuery(@Nullable @RequestParam("name") String name, @Nullable @RequestParam("email") String email, @Nullable @RequestParam("phoneNumber") String phoneNumber){
+        return getUsersByQueryAndReturnDTO(name, email, phoneNumber);
+    }
+
+    private List<MyUserDTO> getUsersByQueryAndReturnDTO(String name, String email, String phoneNumber){
         ArrayList<MyUser> users = new ArrayList<MyUser>();
-        List<MyUserDTO> usersDTO = new ArrayList<MyUserDTO>();
         if(email != null){
             users.addAll(this.userRepository.findUserByPhoneNumber(phoneNumber));
         }
@@ -57,14 +64,13 @@ public class MyUsers {
             return getUsers();  
         }
 
+        List<MyUserDTO> usersDTO = new ArrayList<MyUserDTO>();
+
         for(MyUser user : users){
             usersDTO.add(MyUserDTO.from(user));
         }
-
         return usersDTO;
     }
-
-
 
     @GetMapping("/{id}")
     public MyUserDTO getUserById(@PathVariable Long id){
@@ -83,32 +89,36 @@ public class MyUsers {
 
     @DeleteMapping("/{id}")
     public MyUserDTO deleteUser(@PathVariable Long id){
-        MyUser deletedUser = findUser(id);
-        this.userRepository.delete(deletedUser);
-        return MyUserDTO.from(deletedUser);
+        MyUserDTO deletedUser = MyUserDTO.from(findUser(id));
+        this.userRepository.deleteById(id);
+        return deletedUser;
     }
 
     @PostMapping
     public MyUserDTO createUser(@RequestBody MyUserDTO newUser){
-        MyUser user = new MyUser();
-        user.setId(newUser.id());
-        user.setName(newUser.name());
-        user.setEmail(newUser.email());
-        user.setPhoneNumber(newUser.phoneNumber());
-        boolean isDataValid = user.isUserDataValid();
-        if(!isDataValid){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User couldn't be created, check the sent parameters");
-        }
-        return MyUserDTO.from(this.userRepository.save(user));
+        return updateUserData("create", newUser);
     }
 
     @PutMapping("/{id}")
     public MyUserDTO updateUser(@PathVariable Long id, @RequestBody MyUserDTO updatedUserDTO){
-        MyUser updatedUser = findUser(id);
-        updatedUser.setName(updatedUserDTO.name());
-        updatedUser.setEmail(updatedUserDTO.email());
-        updatedUser.setPhoneNumber(updatedUserDTO.phoneNumber());
-        this.userRepository.save(updatedUser);
-        return MyUserDTO.from(findUser(id));
+        return updateUserData("update", updatedUserDTO);
+    }
+
+    private MyUserDTO updateUserData(String type, MyUserDTO updatedUserDTO){
+        MyUser user = new MyUser();
+        if(type.equals("create")){
+            user.setId(updatedUserDTO.id());
+        }else if(type.equals("update")){
+            user = findUser(updatedUserDTO.id());
+        }
+        user.setName(updatedUserDTO.name());
+        user.setEmail(updatedUserDTO.email());
+        user.setPhoneNumber(updatedUserDTO.phoneNumber());
+        boolean isDataValid = user.isUserDataValid();
+        if(!isDataValid){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User couldn't be created, check the sent parameters");
+        }
+        this.userRepository.save(user);
+        return updatedUserDTO;
     }
 }
