@@ -34,7 +34,7 @@ public class MyUsers {
     
     @GetMapping("/search")
     @ResponseBody
-    public List<MyUser> getUsersByQuery(@RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("phoneNumber") String phoneNumber){
+    public List<MyUser> getUsersByQuery(@Nullable @RequestParam("name") String name, @Nullable @RequestParam("email") String email, @Nullable @RequestParam("phoneNumber") String phoneNumber){
         ArrayList<MyUser> users = new ArrayList<MyUser>();
         if(email != null){
             users.addAll(this.userRepository.findUserByPhoneNumber(phoneNumber));
