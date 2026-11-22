@@ -35,8 +35,10 @@ public class MyUsers {
             return List.of();
         }
         List<MyUser> users = userRepository.findAll();
+        System.out.println(users);
         List<MyUserDTO> usersDTO = new ArrayList<MyUserDTO>();
         for(MyUser user : users){
+            System.out.println("Adding user: " + user.getId() + " " + user.getName());
             usersDTO.add(MyUserDTO.from(user));
         }
         return usersDTO;
