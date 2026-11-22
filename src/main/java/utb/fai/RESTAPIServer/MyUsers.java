@@ -24,7 +24,7 @@ public class MyUsers {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping
+    @GetMapping("/")
     public List<MyUser> getUsers(){
         if(userRepository.findAll().isEmpty()){
             return List.of();
