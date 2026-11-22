@@ -51,16 +51,20 @@ public class MyUsers {
     private List<MyUserDTO> getUsersByQueryAndReturnDTO(String name, String email, String phoneNumber){
         ArrayList<MyUser> users = new ArrayList<MyUser>();
         if(email != null){
+            System.out.println("Email je prazdny.");
             users.addAll(this.userRepository.findUserByPhoneNumber(phoneNumber));
         }
         if(name != null){
+            System.out.println("Jmeno je prazdne.");
             users.addAll(this.userRepository.findUserByName(name));
         }
         if(phoneNumber != null){
+            System.out.println("Cislo je prazdne.");
             users.addAll(this.userRepository.findUserByPhoneNumber(phoneNumber));
         }
 
         if(email == null && name == null && phoneNumber == null){
+            System.out.println("Vsechno je prazdne.");
             return getUsers();  
         }
 
