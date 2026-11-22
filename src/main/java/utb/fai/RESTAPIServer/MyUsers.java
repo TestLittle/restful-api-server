@@ -123,7 +123,7 @@ public class MyUsers {
         if(!isDataValid){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User couldn't be created, check the sent parameters");
         }
-        this.userRepository.save(user);
+        this.userRepository.save(user); //Zde je problem s testem, jelikoz pri ulozeni dojde k prepsani Alice Bobem => oba maji stejne ID
         return updatedUserDTO;
     }
 }
