@@ -48,7 +48,7 @@ public class MyUsers {
         }
 
         if(email == null && name == null && phoneNumber == null){
-            return List.of();
+            return getUsers();
         }
         return users;
         
