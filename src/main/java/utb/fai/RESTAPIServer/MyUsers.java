@@ -91,7 +91,7 @@ public class MyUsers {
     }
 
     @PutMapping("/{id}")
-    public MyUserDTO updateUser(@PathVariable Long id, @RequestBody String name, @RequestBody String email, @RequestBody String phoneNumber){
+    public MyUserDTO updateUser(@PathVariable Long id, @RequestBody MyUserDTO user){
         return MyUserDTO.from(findUser(id));
     }
 }
