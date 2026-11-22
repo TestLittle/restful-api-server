@@ -79,6 +79,7 @@ public class MyUsers {
     @PostMapping
     public MyUserDTO createUser(@RequestBody MyUserDTO newUser){
         MyUser user = new MyUser();
+        user.setId(newUser.id());
         user.setName(newUser.name());
         user.setEmail(newUser.email());
         user.setPhoneNumber(newUser.phoneNumber());
