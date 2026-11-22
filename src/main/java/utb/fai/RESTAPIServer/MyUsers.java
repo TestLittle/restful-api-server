@@ -53,20 +53,16 @@ public class MyUsers {
     private List<MyUserDTO> getUsersByQueryAndReturnDTO(String name, String email, String phoneNumber){
         ArrayList<MyUser> users = new ArrayList<MyUser>();
         if(email != null){
-            System.out.println("Email je prazdny.");
             users.addAll(this.userRepository.findUserByPhoneNumber(phoneNumber));
         }
         if(name != null){
-            System.out.println("Jmeno je prazdne.");
             users.addAll(this.userRepository.findUserByName(name));
         }
         if(phoneNumber != null){
-            System.out.println("Cislo je prazdne.");
             users.addAll(this.userRepository.findUserByPhoneNumber(phoneNumber));
         }
 
         if(email == null && name == null && phoneNumber == null){
-            System.out.println("Vsechno je prazdne.");
             return getUsers();  
         }
 
@@ -113,8 +109,10 @@ public class MyUsers {
     private MyUserDTO updateUserData(String type, MyUserDTO updatedUserDTO){
         MyUser user = new MyUser();
         if(type.equals("create")){
+            System.out.println("Creating new user and setting its ID");
             user.setId(updatedUserDTO.id());
         }else if(type.equals("update")){
+            System.out.println("Updating user with ID: " + updatedUserDTO.id());
             user = findUser(updatedUserDTO.id());
         }
         user.setName(updatedUserDTO.name());
