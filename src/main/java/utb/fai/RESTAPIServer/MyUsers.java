@@ -96,6 +96,7 @@ public class MyUsers {
         if(!isUserDataValid){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User couldn't be created, check the sent parameters");
         }
+        this.userRepository.save(user);
         return MyUserDTO.from(findUser(id));
     }
 }
