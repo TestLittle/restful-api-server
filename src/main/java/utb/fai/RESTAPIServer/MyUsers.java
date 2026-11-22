@@ -91,7 +91,11 @@ public class MyUsers {
     }
 
     @PutMapping("/{id}")
-    public MyUserDTO updateUser(@PathVariable Long id, @RequestBody MyUserDTO user){
+    public MyUserDTO updateUser(@PathVariable Long id, @RequestBody MyUser user){
+        boolean isUserDataValid = user.isUserDataValid();
+        if(!isUserDataValid){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User couldn't be created, check the sent parameters");
+        }
         return MyUserDTO.from(findUser(id));
     }
 }
