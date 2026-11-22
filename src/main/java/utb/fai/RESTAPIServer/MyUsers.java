@@ -31,10 +31,11 @@ public class MyUsers {
     }
 
     private List<MyUserDTO> getUsersAndReturnDTO(){
-        if(userRepository.findAll().isEmpty()){
+        if(this.userRepository.findAll().isEmpty()){
             return List.of();
         }
-        List<MyUser> users = userRepository.findAll();
+        List<MyUser> users = this.userRepository.findAll();
+        System.out.println(this.userRepository.count());
         System.out.println(users);
         List<MyUserDTO> usersDTO = new ArrayList<MyUserDTO>();
         for(MyUser user : users){
