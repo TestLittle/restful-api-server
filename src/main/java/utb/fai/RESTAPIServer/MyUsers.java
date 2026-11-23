@@ -21,7 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController 
 @RequestMapping("/users")
 public class MyUsers {
-    Long id = 0L;
+    //Long id = 0L;
 
     @Autowired
     UserRepository userRepository;
@@ -112,7 +112,7 @@ public class MyUsers {
         MyUser user = new MyUser();
         if(type.equals("create")){
             System.out.println("Creating new user and setting its ID");
-            user.setId(id);
+            //user.setId(id);
         }else if(type.equals("update")){
             System.out.println("Updating user with ID: " + updatedUserDTO.id());
             user = findUser(updatedUserDTO.id());
@@ -125,7 +125,7 @@ public class MyUsers {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User couldn't be created, check the sent parameters");
         }
         this.userRepository.save(user); //Zde je problem s testem, jelikoz pri ulozeni dojde k prepsani Alice Bobem => oba maji stejne ID
-        id++;
+        //id++;
         return updatedUserDTO;
     }
 }
