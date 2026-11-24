@@ -113,6 +113,7 @@ public class MyUsers {
         if(type.equals("create")){
             System.out.println("Creating new user and setting its ID");
             user.setId(id);
+            id++;
         }else if(type.equals("update")){
             System.out.println("Updating user with ID: " + updatedUserDTO.id());
             user = findUser(updatedUserDTO.id());
@@ -122,10 +123,11 @@ public class MyUsers {
         user.setPhoneNumber(updatedUserDTO.phoneNumber());
         boolean isDataValid = user.isUserDataValid();
         if(!isDataValid){
+            id--;
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User couldn't be created, check the sent parameters");
         }
         this.userRepository.save(user); //Zde je problem s testem, jelikoz pri ulozeni dojde k prepsani Alice Bobem => oba maji stejne ID
-        id++;
+        
         return updatedUserDTO;
     }
 }
